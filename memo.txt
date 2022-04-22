@@ -1,0 +1,5 @@
+docker exec <container-id> -it bash
+psql
+\l 
+\c interview_accountapi
+\d
