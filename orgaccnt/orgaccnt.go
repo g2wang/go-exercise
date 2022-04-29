@@ -14,9 +14,10 @@ func Create(accountData models.AccountData) {
 }
 
 func Fetch(UUID string) models.AccountData {
-	resp, err := http.Get(config.Cfg.RestURL)
+	log.Println("url:", config.Cfg.RestURL)
+	resp, err := http.Get(config.Cfg.RestURL + "/v1/organisation/accounts/" + UUID)
 	if err != nil {
-		log.Fatal("error occurred, please try again")
+		log.Println("error: ", err)
 	}
 	defer resp.Body.Close()
 	var accountData models.AccountData

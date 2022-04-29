@@ -1,2 +1,1 @@
-RestUrl:
-  http://localhost:8080
+RestURL: 'http://localhost:8080'
