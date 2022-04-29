@@ -3,3 +3,41 @@ psql
 \l 
 \c interview_accountapi
 \d
+
+# list
+curl -iL -X GET http://localhost:8080/v1/organisation/accounts  -H "Accept: application/vnd.api+json"
+
+# create
+curl -iL -X POST -H "Content-Type: application/vnd.api+json" http://localhost:8080/v1/organisation/accounts -d '{
+   "data": {
+     "type": "accounts",
+     "id": "ad27e265-9605-4b4b-a0e5-3003ea9cc4dc",
+     "organisation_id": "eb0bd6f5-c3f5-44b2-b677-acd23cdde73c",
+     "attributes": {
+       "country": "GB",
+       "name": ["gw test"],
+       "base_currency": "GBP",
+       "bank_id": "400300",
+       "bank_id_code": "GBDSC",
+       "bic": "NWBKGB22",
+       "user_defined_data": [
+         {
+           "key": "Some account related key",
+           "value": "Some account related value"
+         }
+       ],
+       "validation_type": "card",
+       "reference_mask": "############",
+       "acceptance_qualifier": "same_day"
+     }
+   }
+ }
+'
+
+# Fetch
+curl -iL -X GET http://localhost:8080/v1/organisation/accounts/ad27e265-9605-4b4b-a0e5-3003ea9cc4dc -H "Accept: application/vnd.api+json"
+
+# Delete
+curl -iL -X DELETE http://localhost:8080/v1/organisation/accounts/ad27e265-9605-4b4b-a0e5-3003ea9cc4dc?version=0
+
+
