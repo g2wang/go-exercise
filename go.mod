@@ -2,7 +2,10 @@ module github.com/g2wang/go-exercise
 
 go 1.18
 
-require github.com/ilyakaznacheev/cleanenv v1.2.6
+require (
+	github.com/google/uuid v1.3.0
+	github.com/ilyakaznacheev/cleanenv v1.2.6
+)
 
 require (
 	github.com/BurntSushi/toml v0.3.1 // indirect

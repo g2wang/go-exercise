@@ -1,4 +1,11 @@
-docker exec <container-id> -it bash
+docker ps
+
+Http server:
+    docker exec -it c3ee2f719c21 sh
+
+DB server:
+    docker exec -it 3785e47bd420 bash
+
 psql
 \l 
 \c interview_accountapi
@@ -33,11 +40,32 @@ curl -iL -X POST -H "Content-Type: application/vnd.api+json" http://localhost:80
    }
  }
 '
+------------
+curl -iL -X POST -H "Content-Type: application/vnd.api+json" http://localhost:8080/v1/organisation/accounts -d '
+{
+   "data":{
+      "attributes":{
+         "bank_id":"400301",
+         "bank_id_code":"GBDSD",
+         "base_currency":"GBP",
+         "bic":"NWBKGB23",
+         "country":"GB",
+         "name":[
+            "Guangd Wang"
+         ]
+      },
+      "id":"fdd448e6-edac-405e-9d7d-fac7b1bb61b8",
+      "organisation_id":"2ca8c854-89e8-43d2-a7f2-6f6bc45708cf",
+      "type":"accouts"
+   }
+}
+'
+
+
 
 # Fetch
 curl -iL -X GET http://localhost:8080/v1/organisation/accounts/ad27e265-9605-4b4b-a0e5-3003ea9cc4dc -H "Accept: application/vnd.api+json"
 
 # Delete
 curl -iL -X DELETE http://localhost:8080/v1/organisation/accounts/ad27e265-9605-4b4b-a0e5-3003ea9cc4dc?version=0
-
 

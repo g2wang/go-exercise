@@ -5,7 +5,7 @@ import (
 )
 
 type Config struct {
-	RestURL string `yaml:"RestURL" env:"REST_URL" evn-default:"http://localhost:8080"`
+	RestURL string `yaml:"RestURL" env:"REST_URL" evn-default:"http://localhost:8080/v1/organisation/accounts"`
 }
 
 var Cfg Config
