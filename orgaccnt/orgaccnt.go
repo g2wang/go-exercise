@@ -73,13 +73,5 @@ func Delete(UUID string, version int64) (bool, error) {
 		return false, err
 	}
 	defer resp.Body.Close()
-	respBody, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		log.Fatalf("error: %v", err)
-		return false, err
-	}
-	if respBody != nil {
-		log.Printf("response Body length: %v", len(string(respBody)))
-	}
 	return true, nil
 }
