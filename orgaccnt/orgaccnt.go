@@ -41,7 +41,7 @@ func Create(accountData models.AccountData) (bool, error) {
 	return true, nil
 }
 
-func Fetch(UUID string) models.AccountData {
+func Fetch(UUID string) *models.AccountData {
 	resp, err := http.Get(config.Cfg.RestURL + "/" + UUID)
 	if err != nil {
 		log.Fatalf("error: %v", err)
@@ -52,7 +52,7 @@ func Fetch(UUID string) models.AccountData {
 		&accountData); err != nil {
 		log.Fatalf("error: %v", err)
 	}
-	return *accountData["data"]
+	return accountData["data"]
 }
 
 func Delete(UUID string, version int64) (bool, error) {

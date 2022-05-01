@@ -42,7 +42,7 @@ func testCreate() string {
 	return id
 }
 
-func testFetch(id string) models.AccountData {
+func testFetch(id string) *models.AccountData {
 	accountData := orgaccnt.Fetch(id)
 	log.Printf("account: %+v", accountData)
 	log.Printf("attributes: %+v", accountData.Attributes)
