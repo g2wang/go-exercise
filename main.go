@@ -10,8 +10,8 @@ import (
 
 func main() {
 	id := testCreate()
-	testFetch(id)
-	testDelete(id, "0")
+	accountData := testFetch(id)
+	testDelete(id, *accountData.Version)
 }
 
 func testCreate() string {
@@ -42,13 +42,14 @@ func testCreate() string {
 	return id
 }
 
-func testFetch(id string) {
+func testFetch(id string) models.AccountData {
 	accountData := orgaccnt.Fetch(id)
 	log.Printf("account: %+v", accountData)
 	log.Printf("attributes: %+v", accountData.Attributes)
+	return accountData
 }
 
-func testDelete(id string, version string) {
+func testDelete(id string, version int64) {
 	_, err := orgaccnt.Delete(id, version)
 	if err != nil {
 		log.Fatalf("error: %v", err)

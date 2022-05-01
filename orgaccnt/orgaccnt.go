@@ -7,6 +7,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"strconv"
 
 	"github.com/g2wang/go-exercise/orgaccnt/config"
 	"github.com/g2wang/go-exercise/orgaccnt/models"
@@ -54,8 +55,8 @@ func Fetch(UUID string) models.AccountData {
 	return *accountData["data"]
 }
 
-func Delete(UUID string, version string) (bool, error) {
-	req, err := http.NewRequest("DELETE", config.Cfg.RestURL+"/"+UUID+"?version="+version, nil)
+func Delete(UUID string, version int64) (bool, error) {
+	req, err := http.NewRequest("DELETE", config.Cfg.RestURL+"/"+UUID+"?version="+strconv.FormatInt(version, 10), nil)
 	if err != nil {
 		log.Fatalf("error: %v", err)
 		return false, err
