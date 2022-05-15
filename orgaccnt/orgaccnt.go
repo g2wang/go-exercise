@@ -18,6 +18,7 @@ func init() {
 	URL = os.Getenv("ACCOUNT_SERVICE_URL")
 	if len(URL) == 0 {
 		URL = "http://localhost:8080/v1/organisation/accounts"
+		log.Printf("ACCOUNT_SERVICE_URL environment var not set. Using default: %v", URL)
 	}
 }
 
