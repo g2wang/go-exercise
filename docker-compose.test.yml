@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  account_tests:
+    build:
+      context: .
+      dockerfile: ./Dockerfile.test
+    volumes:
+      - $PWD:/go/src/github.com/g2wang/go-exercise
+    depends_on:
+      - accountapi
+    environment:
+      - ACCOUNT_SERVICE_URL=http://accountapi:8080/v1/organisation/accounts
+
