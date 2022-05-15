@@ -2,6 +2,7 @@
 go-lang coding exercise
 
 By Guangde Wang
+g2wang@yahoo.com
 
 New to golan, veteran in Java
 
