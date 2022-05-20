@@ -7,7 +7,7 @@ import (
 	"github.com/google/uuid"
 )
 
-var createdAccountData models.AccountData
+var createdAccountData *models.AccountData
 
 func TestCreate(t *testing.T) {
 
@@ -34,7 +34,7 @@ func TestCreate(t *testing.T) {
 	if err != nil {
 		t.Errorf("error creating account: %v", err)
 	}
-	createdAccountData = *accountDataResp
+	createdAccountData = accountDataResp
 	if accountDataResp.ID != id {
 		t.Errorf("ID mismatch after account creation. Expected: %v, Actual: %v", id, accountDataResp.ID)
 	}
@@ -45,6 +45,9 @@ func TestCreate(t *testing.T) {
 }
 
 func TestFetch(t *testing.T) {
+	if createdAccountData == nil {
+		TestCreate(t)
+	}
 	accountData, err := Fetch(createdAccountData.ID)
 	if err != nil {
 		t.Errorf("Fetch error: %v", err)
@@ -58,6 +61,9 @@ func TestFetch(t *testing.T) {
 }
 
 func TestDelete(t *testing.T) {
+	if createdAccountData == nil {
+		TestCreate(t)
+	}
 	success, err := Delete(createdAccountData.ID, *createdAccountData.Version)
 	if err != nil {
 		t.Errorf("Account Deletion error: %v", err)
@@ -65,4 +71,5 @@ func TestDelete(t *testing.T) {
 	if !success {
 		t.Errorf("Account Deletion return value error. Expected: %v, Actual: %v", true, success)
 	}
+	createdAccountData = nil
 }

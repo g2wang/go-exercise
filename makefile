@@ -1,3 +1,3 @@
 test:
-	docker-compose -f docker-compose.yml -f docker-compose.test.yml up --build --abort-on-container-exit
-	docker-compose -f docker-compose.yml -f docker-compose.test.yml down --volumes
+	docker-compose up --build --abort-on-container-exit
+	docker-compose down --volumes
