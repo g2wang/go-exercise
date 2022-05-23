@@ -14,4 +14,5 @@ The service URL can be configured via environment variable:
 
 To run the tests, issue command:
 `make test`
-
+or
+`docker-compose up`
