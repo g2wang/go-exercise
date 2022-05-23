@@ -54,7 +54,7 @@ func Fetch(UUID string) (*models.AccountData, error) {
 	var accountData map[string]*models.AccountData
 	if err = json.NewDecoder(resp.Body).Decode(
 		&accountData); err != nil {
-		log.Fatalf("error: %v", err)
+		log.Printf("error: %v", err)
 		return nil, err
 	}
 	return accountData["data"], nil

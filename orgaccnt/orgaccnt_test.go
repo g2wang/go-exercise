@@ -4,6 +4,7 @@ import (
 	"testing"
 
 	"github.com/g2wang/go-exercise/orgaccnt/models"
+	"github.com/google/go-cmp/cmp"
 	"github.com/google/uuid"
 )
 
@@ -24,10 +25,12 @@ func TestCreate(t *testing.T) {
 	}
 
 	id := uuid.NewString()
+	version := int64(0)
 	accountData := models.AccountData{
 		ID:             id,
 		Type:           "accounts",
 		OrganisationID: uuid.NewString(),
+		Version:        &version,
 		Attributes:     &attr,
 	}
 	accountDataResp, err := Create(accountData)
@@ -35,11 +38,8 @@ func TestCreate(t *testing.T) {
 		t.Errorf("error creating account: %v", err)
 	}
 	createdAccountData = accountDataResp
-	if accountDataResp.ID != id {
-		t.Errorf("ID mismatch after account creation. Expected: %v, Actual: %v", id, accountDataResp.ID)
-	}
-	if *accountDataResp.Version != 0 {
-		t.Errorf("Version error after account creation. Expected: %v, Actual: %v", 0, *accountDataResp.Version)
+	if d := cmp.Diff(*createdAccountData, accountData); d != "" {
+		t.Errorf("unexpected difference in featched acccount data:\n%v", d)
 	}
 	t.Logf("account create success. id: %+v, version: %v", accountDataResp.ID, *accountDataResp.Version)
 }
@@ -51,11 +51,8 @@ func TestFetch(t *testing.T) {
 	accountData, err := Fetch(createdAccountData.ID)
 	if err != nil {
 		t.Errorf("Fetch error: %v", err)
-	} else if accountData.ID != createdAccountData.ID {
-		t.Errorf("Account Fetch error - ID mismatch. Expected: %v, Actual: %v", createdAccountData.ID, accountData.ID)
-	} else if *accountData.Version != *createdAccountData.Version {
-		t.Errorf("Account Fetch error - Version mismatch. Expected: %v, Actual: %v",
-			*createdAccountData.Version, *accountData.Version)
+	} else if d := cmp.Diff(*createdAccountData, *accountData); d != "" {
+		t.Errorf("unexpected difference in featched acccount data:\n%v", d)
 	}
 	t.Logf("account fetch success. id: %+v, version: %v", accountData.ID, *accountData.Version)
 }
@@ -70,6 +67,10 @@ func TestDelete(t *testing.T) {
 	}
 	if !success {
 		t.Errorf("Account Deletion return value error. Expected: %v, Actual: %v", true, success)
+	}
+	_, err = Fetch(createdAccountData.ID)
+	if err == nil {
+		t.Errorf("Deleted but still fetched error: %v", err)
 	}
 	createdAccountData = nil
 }
